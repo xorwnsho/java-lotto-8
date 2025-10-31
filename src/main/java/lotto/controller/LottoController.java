@@ -4,6 +4,8 @@ import lotto.validator.InputValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+import java.util.List;
+
 public class LottoController {
 
     private final InputView inputView;
@@ -18,15 +20,30 @@ public class LottoController {
 
     public void run() {
         int purchaseAmount = getValidPurchaseAmount();
-        System.out.println("검증된 구입 금액 : " + purchaseAmount);
+        List<Integer> winningNumbers = getWinningNumbers();
+
+        for (Integer winningNumber : winningNumbers) {
+            System.out.print(winningNumber + " ");
+        }
     }
 
     private int getValidPurchaseAmount() {
-        while(true){
-            try{
+        while (true) {
+            try {
                 String input = inputView.readPurchaseAmount();
                 return inputValidator.validatePurchaseAmount(input);
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private List<Integer> getWinningNumbers() {
+        while (true) {
+            try {
+                String input = inputView.readLottoNumbers();
+                return inputValidator.validateWinningNumbers(input);
+            } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e.getMessage());
             }
         }

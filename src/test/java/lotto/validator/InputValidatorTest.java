@@ -2,10 +2,13 @@ package lotto.validator;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -62,5 +65,52 @@ class InputValidatorTest {
                 .hasMessageContaining("[ERROR] 구입 금액은 0보다 커야 합니다.");
     }
 
+    @DisplayName("당첨 번호가 6개가 아닐 때 예외를 발생시킨다")
+    @Test
+    void numberIsNotSix(){
+        //given
+        String input = "1,2,3,4,5,6,7";
+
+        //when&then
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 6개여야 합니다.");
+    }
+
+    @DisplayName("숫자가 아닌 값이 섞여있을 때 예외를 발생시킨다.")
+    @Test
+    void numberHasNotNumeric(){
+        //given
+        String input = "1,2,3,4,5,a";
+
+        //when&then
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 숫자여야 합니다.");
+    }
+
+    @DisplayName("1~45 범위가 벗어난 숫자가 있을 때 예외를 발생시킨다.")
+    @Test
+    void numberIsOverMinAndMax(){
+        //given
+        String input = "1,2,3,4,5,1000";
+
+        //when&then
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 1부터 45 사이의 숫자여야 합니다.");
+    }
+
+    @DisplayName("중복된 숫자가 있을 때 예외를 발생시킨다.")
+    @Test
+    void numberIsDuplicated() {
+        //given
+        String input = "1, 1, 3, 4, 5, 6";
+
+        //when&then
+        assertThatThrownBy(() -> inputValidator.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("[ERROR] 당첨 번호는 중복될 수 없습니다.");
+    }
 
 }
