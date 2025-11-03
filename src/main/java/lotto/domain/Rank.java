@@ -6,7 +6,7 @@ public enum Rank {
     FIFTH(3, 5_000, false, "3개 일치"),
     FOURTH(4, 50_000, false, "4개 일치"),
     THIRD(5, 1_500_000, false, "5개 일치"),
-    SECOND(5, 30_000_000, true, "5개 일치 보너스 볼 일치"),
+    SECOND(5, 30_000_000, true, "5개 일치, 보너스 볼 일치"),
     FIRST(6, 2_000_000_000, false, "6개 일치"),
     MISS(0, 0, false, "꽝");
 

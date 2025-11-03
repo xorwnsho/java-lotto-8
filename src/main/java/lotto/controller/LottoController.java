@@ -45,6 +45,9 @@ public class LottoController {
 
         outputView.printStatisticsHeader();
         outputView.printStatistics(result.getStatistics());
+
+        double profitRate = result.calculateProfitRate(purchaseAmount);
+        outputView.printProfitRate(profitRate);
     }
 
     private int getValidPurchaseAmount() {

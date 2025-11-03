@@ -33,4 +33,16 @@ public class LottoResult {
         }
         return totalPrize;
     }
+
+    // 기능 17, 18, 19번 : 총 수익률 계산
+    public double calculateProfitRate(int purchaseAmount){
+        long totalPrize = calculateTotalPrize();
+
+        if(purchaseAmount == 0)
+            return 0.0;
+
+        double profitRate = (double) totalPrize / purchaseAmount * 100.0;
+
+        return Math.round(profitRate * 10.0) / 10.0;
+    }
 }
