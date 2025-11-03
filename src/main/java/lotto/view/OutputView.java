@@ -1,8 +1,10 @@
 package lotto.view;
 
 import lotto.domain.Lotto;
+import lotto.domain.Rank;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputView {
 
@@ -26,5 +28,15 @@ public class OutputView {
     public void printStatisticsHeader(){
         System.out.println("\n당첨통계");
         System.out.println("---");
+    }
+
+    // 16번 기능 : 당첨 통계 출력
+    public void printStatistics(Map<Rank, Integer> statistics){
+        for(Rank rank : Rank.getRanksForDisplay()){
+            System.out.printf("%s (%,d원) - %d개\n",
+                    rank.getDescription(),
+                    rank.getPrizeMoney(),
+                    statistics.get(rank));
+        }
     }
 }

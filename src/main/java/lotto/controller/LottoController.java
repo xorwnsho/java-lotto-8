@@ -44,6 +44,7 @@ public class LottoController {
         }
 
         outputView.printStatisticsHeader();
+        outputView.printStatistics(result.getStatistics());
     }
 
     private int getValidPurchaseAmount() {
