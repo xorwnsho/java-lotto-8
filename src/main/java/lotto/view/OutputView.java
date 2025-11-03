@@ -21,4 +21,10 @@ public class OutputView {
             System.out.println(lotto.getNumbers());
         }
     }
+
+    // 14번 기능 : 당첨 통계 및 구분선 ("---") 출력
+    public void printStatisticsHeader(){
+        System.out.println("\n당첨통계");
+        System.out.println("---");
+    }
 }

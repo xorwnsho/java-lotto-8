@@ -35,6 +35,8 @@ public class LottoController {
 
         List<Integer> winningNumbers = getWinningNumbers();
         int bonusNumber = getBonusNumber(winningNumbers);
+
+        outputView.printStatisticsHeader();
     }
 
     private int getValidPurchaseAmount() {
