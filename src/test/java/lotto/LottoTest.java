@@ -5,7 +5,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -22,5 +24,24 @@ class LottoTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    // TODO: 추가 기능 구현에 따른 테스트 코드 작성
+    // 범위 테스트용 데이터
+    static Stream<List<Integer>> provideNumbersOutOfRange(){
+        return Stream.of(
+                List.of(1, 2, 3, 4, 5, 46),
+                List.of(0, 1, 2, 3, 4, 5)
+        );
+    }
+
+    @DisplayName("기능 22 : 로또 번호가 생성될 때 오름차순으로 정렬되어야 한다.")
+    @Test
+    void createLotto_ShouldBeSorted(){
+        //given
+        List<Integer> numbers = List.of(6, 5, 4, 3, 2, 1);
+
+        //when
+        Lotto lotto = new Lotto(numbers);
+
+        //then
+        assertThat(lotto.getNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
+    }
 }
