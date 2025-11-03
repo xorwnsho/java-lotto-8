@@ -20,13 +20,21 @@ public class Lotto {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
 
+        validateNumberRange(numbers);
+
+        validateNoDuplicates(numbers);
+    }
+
+    private void validateNumberRange(List<Integer> numbers){
         // 2번 기능 : 1~45 범위인지 검증
         for (Integer number : numbers) {
             if(number < 1 || number > 45){
                 throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
             }
         }
+    }
 
+    private void validateNoDuplicates(List<Integer> numbers){
         // 9번 기능 : 중복이 없는지 검증
         Set<Integer> uniqueNumbers = new HashSet<>(numbers);
         if(uniqueNumbers.size() != numbers.size()){
@@ -39,5 +47,16 @@ public class Lotto {
         return Collections.unmodifiableList(numbers);
     }
 
-    // TODO: 추가 기능 구현
+    // 기능 23, 24번 (보너스 번호 비교용)
+    public boolean contains(int number) {
+        return this.numbers.contains(number);
+    }
+
+    // 당첨 번호와 몇 개의 번호가 일치하는지 계산
+    public int countMatchingNumbers(Lotto otherLotto){
+        List<Integer> otherNumbers = otherLotto.getNumbers();
+        return (int) this.numbers.stream()
+                .filter(otherNumbers::contains)
+                .count();
+    }
 }

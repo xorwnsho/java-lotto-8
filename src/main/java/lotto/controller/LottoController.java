@@ -1,7 +1,6 @@
 package lotto.controller;
 
-import lotto.domain.Lotto;
-import lotto.domain.LottoMachine;
+import lotto.domain.*;
 import lotto.validator.InputValidator;
 import lotto.view.InputView;
 import lotto.view.OutputView;
@@ -35,6 +34,14 @@ public class LottoController {
 
         List<Integer> winningNumbers = getWinningNumbers();
         int bonusNumber = getBonusNumber(winningNumbers);
+
+        // 기능 15, 23 ~ 26번 (당첨 통계 계산)
+        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonusNumber);
+        LottoResult result = new LottoResult();
+        for (Lotto lotto : purchasedLottos) {
+            Rank rank = winningLotto.match(lotto);
+            result.addResult(rank);
+        }
 
         outputView.printStatisticsHeader();
     }

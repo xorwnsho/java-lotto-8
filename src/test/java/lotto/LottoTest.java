@@ -3,6 +3,8 @@ package lotto;
 import lotto.domain.Lotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -44,4 +46,34 @@ class LottoTest {
         //then
         assertThat(lotto.getNumbers()).isEqualTo(List.of(1, 2, 3, 4, 5, 6));
     }
+
+    @DisplayName("기능 23 : 두 로또 번호 간에 일치하는 번호의 개수를 정확히 변환한다.")
+    @Test
+    void countMatchingNumbers_ShouldReturnCorrectCount(){
+        //given
+        Lotto lotto1 = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        Lotto lotto2 = new Lotto(List.of(1, 2, 3, 7, 8, 9));
+
+        //when
+        int matchCount = lotto1.countMatchingNumbers(lotto2);
+
+        //then
+        assertThat(matchCount).isEqualTo(3);
+    }
+
+    @DisplayName("기능 24 : 로또가 특정 번호를 포함하는지 정확히 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"1, true", "7, false"})
+    void contains_ShouldReturnCorrectBoolean(int number, boolean expected){
+        //given
+        Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+
+        //when
+        boolean result = lotto.contains(number);
+
+        //then
+        assertThat(result).isEqualTo(expected);
+    }
+
+
 }
